@@ -1,0 +1,11 @@
+{
+    "ts_cert": [
+        {
+            "ts_sign": {
+                "client_ts": "cts",
+                "node_ts": "nts",
+                "sign": "sign"
+            }
+        }
+    ]
+}

@@ -1,0 +1,8 @@
+{
+    "sender":"",
+    "recipient":"",
+    "amt":0,
+    "data":"",
+    "nonce":0,
+    "sign":""
+}

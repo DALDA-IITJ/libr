@@ -1,0 +1,28 @@
+node :
+
+/getTime:
+
+1. client <- ts
+2. node_time - client_ts <=  5min(predefined)
+
+3. -> ts_sign
+
+/recieveMsg:
+
+1. client <- msg_cert
+2. verify structure and unwrap 
+    all mod_cert[i].ts_cert and mod[i].msgs must be same
+
+4. verify sender sign.
+5. verify one ts_cert
+6. recieve and verify blockchain
+
+7. verify findDb with itself
+8. verify mod_cert[i]
+9. Store and response
+
+/sendMsg:
+
+1. return all msgs for that timestamp.
+
+
