@@ -1,0 +1,34 @@
+package cmd
+
+import (
+	"client/core"
+	"fmt"
+
+	"github.com/spf13/cobra"
+)
+
+var fetchCmd = &cobra.Command{
+	Use:   "fetch",
+	Short: "Fetch messages by timestamp",
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) < 1 {
+			fmt.Println("Usage: cli fetch <timestamp>")
+			return
+		}
+
+		timestamp := args[0]
+		core := core.NewCore()
+		messages, err := core.FetchMessages(timestamp)
+		if err != nil {
+			fmt.Println("Error:", err)
+		} else {
+			for _, msg := range messages {
+				fmt.Printf("[%s] %s\n", msg.Timestamp, msg.Content)
+			}
+		}
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(fetchCmd)
+}
