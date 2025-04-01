@@ -8,11 +8,6 @@ import (
 	"sync"
 )
 
-// DatabaseNode represents a database node in the network.
-type DatabaseNode struct {
-	IP   string
-	Port string
-}
 
 // storeMessage stores the message in multiple database nodes
 func storeMessage(msgCert MsgCert) error {

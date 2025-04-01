@@ -10,19 +10,7 @@ import (
 	"client/core/crypto" // Import the crypto module
 )
 
-type Message struct {
-	Content   string `json:"content"`
-	Timestamp string `json:"timestamp"`
-}
 
-type MsgCert struct {
-	Sender  string    `json:"sender"`
-	Msg     string    `json:"msg"`
-	TS      string    `json:"ts"`
-	ModCert []ModSign `json:"mod_cert"`
-	Sign    string    `json:"sign"`
-	PubKey  string    `json:"publicKey"`
-}
 
 func (c *Core) SendMessage(content string) error {
 	// Load keys
@@ -35,7 +23,7 @@ func (c *Core) SendMessage(content string) error {
 		log.Fatal("❌ Error loading public key:", err)
 	}
 
-	msg := Message{
+	msg := UserMessage{
 		Content:   content,
 		Timestamp: strconv.FormatInt(time.Now().Unix(), 10),
 	}

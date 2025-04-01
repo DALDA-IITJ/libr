@@ -9,26 +9,6 @@ import (
 	"sync"
 )
 
-// Moderator represents a moderator node.
-type Moderator struct {
-	IP        string
-	Port      string
-	PublicKey string
-}
-
-// ModSign represents a moderator's signature response.
-type ModSign struct {
-	Sign      string `json:"sign"`
-	PublicKey string `json:"public_key"`
-}
-
-// ModCert aggregates valid moderator signatures.
-type ModCert struct {
-	Msg        string
-	Timestamp  string
-	Signatures []ModSign // Only stores {PublicKey, Signature}
-}
-
 // FetchModerators simulates retrieving moderator details.
 // TODO: Replace with real blockchain data fetching.
 func FetchModerators() []Moderator {
