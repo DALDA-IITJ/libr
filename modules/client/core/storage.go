@@ -5,36 +5,79 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"sync"
 )
 
-const dbURL = "http://database-service/api/store"
+// DatabaseNode represents a database node in the network.
+type DatabaseNode struct {
+	IP   string
+	Port string
+}
 
-func storeMessage(msg Message) error {
-	data, _ := json.Marshal(msg)
-	resp, err := http.Post(dbURL, "application/json", bytes.NewBuffer(data))
-	if err != nil {
-		return fmt.Errorf("error sending message to database: %v", err)
+// storeMessage stores the message in multiple database nodes
+func storeMessage(msgCert MsgCert) error {
+	// Fetch simulated database nodes
+	dbNodes := fetchDatabaseNodes() // You will replace this with a real query to blockchain
+
+	// Channel to collect errors
+	errorChannel := make(chan error, len(dbNodes))
+
+	var wg sync.WaitGroup
+
+	// Iterate over each database node and send the message certificate
+	for _, dbNode := range dbNodes {
+		wg.Add(1)
+
+		go func(dbNode DatabaseNode) {
+			defer wg.Done()
+
+			url := fmt.Sprintf("http://%s:%s/store", dbNode.IP, dbNode.Port)
+
+			// Marshal the msgCert to JSON
+			reqBody, err := json.Marshal(msgCert)
+			if err != nil {
+				errorChannel <- fmt.Errorf("failed to marshal msgCert for %s: %v", dbNode.IP, err)
+				return
+			}
+
+			// Send POST request to store the message cert
+			resp, err := http.Post(url, "application/json", bytes.NewBuffer(reqBody))
+			if err != nil {
+				errorChannel <- fmt.Errorf("error sending to %s: %v", dbNode.IP, err)
+				return
+			}
+			defer resp.Body.Close()
+
+			// If the response status code is not 200 OK, it's an error
+			if resp.StatusCode != http.StatusOK {
+				errorChannel <- fmt.Errorf("error from %s: %v", dbNode.IP, resp.Status)
+				return
+			}
+
+			fmt.Printf("Message cert successfully sent to %s\n", dbNode.IP)
+		}(dbNode)
 	}
-	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("failed to store message")
+	// Wait for all goroutines to finish
+	wg.Wait()
+	close(errorChannel)
+
+	// Check for errors
+	for err := range errorChannel {
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
 }
 
-func fetchMessages(timestamp string) ([]Message, error) {
-	resp, err := http.Get(fmt.Sprintf("%s?timestamp=%s", dbURL, timestamp))
-	if err != nil {
-		return nil, fmt.Errorf("error fetching messages: %v", err)
+// fetchDatabaseNodes simulates fetching the database nodes.
+// TODO: Replace this with real blockchain query.
+func fetchDatabaseNodes() []DatabaseNode {
+	return []DatabaseNode{
+		{"192.168.1.20", "8080"},
+		{"192.168.1.21", "8081"},
+		{"192.168.1.22", "8082"},
 	}
-	defer resp.Body.Close()
-
-	var messages []Message
-	if err := json.NewDecoder(resp.Body).Decode(&messages); err != nil {
-		return nil, fmt.Errorf("error decoding messages: %v", err)
-	}
-
-	return messages, nil
 }

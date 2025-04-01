@@ -51,8 +51,8 @@ func (c *Core) SendMessage(content string) error {
 		Sender:  publicKey,
 		Msg:     msg.Content,
 		TS:      msg.Timestamp,
-		ModCert: modCert.Signatures,
-		PubKey:  publicKey, // Ensure public key is in the cert
+		ModCert: modCert.Signatures, // correct
+		PubKey:  publicKey,          // Ensure public key is in the cert
 	}
 
 	// Serialize MsgCert for signing
@@ -69,7 +69,7 @@ func (c *Core) SendMessage(content string) error {
 	fmt.Println("✅ Final MsgCert:", msgCert)
 
 	// Send to Storage
-	err = storeMessage(msg)
+	err = storeMessage(msgCert)
 	if err != nil {
 		return err
 	}
