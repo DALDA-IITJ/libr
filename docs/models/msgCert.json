@@ -1,13 +1,21 @@
 {
-    "sender": "senderpk",
-    "mod_cert": [
-        {
-            "mod_sign": {
-                "msg": "msg",
-                "ts_cert": "ts_cert_obj",
-                "sign": "sign"
+  "sender": "senderpk",
+  "mod_cert": [
+    {
+      "mod_sign": {
+        "msg": "msg",
+        "ts_cert": [
+          {
+            "ts_sign": {
+              "client_ts": "cts",
+              "node_ts": "nts",
+              "sign": "sign"
             }
-        }
-    ],
-    "sign":"sign"
+          }
+        ],
+        "sign": "sign"
+      }
+    }
+  ],
+  "sign": "sign"
 }
