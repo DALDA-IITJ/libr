@@ -3,7 +3,7 @@
         {
             "mod_sign": {
                 "msg": "msg",
-                "ts_cert": "ts_cert_obj",
+                "ts": "ts",
                 "sign": "sign"
             }
         }
