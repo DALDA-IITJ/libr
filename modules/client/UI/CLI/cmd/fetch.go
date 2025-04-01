@@ -23,7 +23,7 @@ var fetchCmd = &cobra.Command{
 			fmt.Println("Error:", err)
 		} else {
 			for _, msg := range messages {
-				fmt.Printf("[%s] %s\n", msg.Timestamp, msg.Content)
+				fmt.Printf("%s\n", msg.Content)
 			}
 		}
 	},
