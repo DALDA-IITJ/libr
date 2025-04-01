@@ -19,11 +19,9 @@ State Transactions
             "traffic": ,
             "modFaultTolerance": ,
             "dbReplicationFactor": ,
-            "communityPublicKey": "communityPublicKey"
-
     },
     "nonce": senderNonce,
-    "sign": ""
+    "sign": "" // treated as community public key
 }
 
 // DB Joined
