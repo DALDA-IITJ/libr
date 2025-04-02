@@ -2,17 +2,6 @@
 
 ## Endpoints
 
-### `/getTime`
-
-#### Flow:
-1. **Client Request**: 
-    - The client sends a timestamp (`ts`) to the server.
-2. **Validation**: 
-    - The server checks if the difference between the node's current time (`node_time`) and the client's timestamp (`client_ts`) is within a predefined limit (5 minutes).
-3. **Response**: 
-    - If valid, the server responds with a signed timestamp (`ts_sign`).
-
----
 
 ### `/receiveMsg`
 
@@ -31,7 +20,7 @@
 6. **Database Validation**: 
     - The server checks the database consistency using `findDb`.
 7. **Module Certificate Validation**: 
-    - The server validates each module certificate (`mod_cert[i]`).
+    - The server validates each module certificate (`mod_cert[i]`) and each mod is different.
 8. **Storage and Response**: 
     - The server stores the data and sends an appropriate response back to the client.
 
