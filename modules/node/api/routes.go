@@ -22,10 +22,6 @@ import "github.com/gorilla/mux"
 //    - Checks if the DB Node is active and running.
 //    - Refer to the "Check Node Health" section in NODEAPIS.md for details.
 //
-// 4. GET /db/timesign
-//    - Provides a signed timestamp for a given client timestamp.
-//    - Refer to the "Get Time Signature" section in NODEAPIS.md for details.
-//
 // Returns:
 // - *mux.Router: A configured router with the defined API routes.
 
@@ -34,7 +30,7 @@ func SetUpRoutes() *mux.Router {
 	router.HandleFunc("/db/saveMsg", SaveMsgHandler).Methods("POST")
 	router.HandleFunc("/db/getMsg", GetMsgHandler).Methods("GET")
 	router.HandleFunc("/db/isalive", IsAliveHandler).Methods("GET")
-	router.HandleFunc("/db/timesign", TimeSignHandler).Methods("GET")
+	// router.HandleFunc("/db/timesign", TimeSignHandler).Methods("GET")
 
 	return router
 }
