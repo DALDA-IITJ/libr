@@ -1,0 +1,17 @@
+- Cryptographic functions write and understand
+  - RegisterNode()
+  - SendTxn()
+  - MakeSign()
+  - GetBlockchainStateAt()
+  - VerifyMsgCert()
+    - VerifyMods()
+    - FindMODAlgo
+        - find K servers
+        - verify MODS in k MODS
+
+- FindDBAlgo
+    - find K servers
+    - verify itself in k servers
+
+
+- All 4 Handlers for apis
