@@ -1,10 +1,8 @@
 package blockchain
 
-import (
-	logger "libr/core"
-)
+import "node/utils/logger"
 
-func SendTransaction(tx Transaction) error {
+func SendTxn(tx Txn) error {
 	// Placeholder implementation for sending a transaction
 	// You can add logic to broadcast the transaction to the network or process it further
 	logger.Info("Transaction sent: " + tx.Sender + " -> " + tx.Recipient)
