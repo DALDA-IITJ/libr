@@ -12,15 +12,19 @@ import (
 // FetchModerators simulates retrieving moderator details.
 // TODO: Replace with real blockchain data fetching.
 func FetchModerators() []Moderator {
+	
+	fmt.Printf("Fetching mods...")
+
 	return []Moderator{
-		{"192.168.1.10", "8080", "PublicKey1"},
-		{"192.168.1.11", "8081", "PublicKey2"},
-		{"192.168.1.12", "8082", "PublicKey3"},
+		{"localhost", "8080", "PublicKey1"},
+		{"localhost", "8081", "PublicKey2"},
+		// {"localhost", "8082", "PublicKey3"},
 	}
 }
 
 // SendToModerators sends a message to moderators and collects signatures.
 func SendToModerators(msg string, timestamp string) (ModCert, error) {
+	fmt.Printf("Sending to mods...")
 	moderators := FetchModerators() // requires implementation
 	var modCert ModCert
 	modCert.Msg = msg

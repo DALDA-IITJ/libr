@@ -10,24 +10,26 @@ import (
 	"client/core/crypto" // Import the crypto module
 )
 
-
-
 func (c *Core) SendMessage(content string) error {
+
+	fmt.Printf("Sending User Message %s\n", content)
+
 	// Load keys
 	privateKey, err := crypto.LoadPrivateKey()
 	if err != nil {
 		log.Fatal("❌ Error loading private key:", err)
 	}
+	fmt.Printf("Loaded Private Key\n")
 	publicKey, err := crypto.LoadPublicKey()
 	if err != nil {
 		log.Fatal("❌ Error loading public key:", err)
 	}
+	fmt.Printf("Loaded Public Key\n")
 
 	msg := UserMessage{
 		Content:   content,
 		Timestamp: strconv.FormatInt(time.Now().Unix(), 10),
 	}
-
 	// Send to Moderation
 	modCert, err := SendToModerators(msg.Content, msg.Timestamp)
 	if err != nil {
@@ -40,7 +42,6 @@ func (c *Core) SendMessage(content string) error {
 		Msg:     msg.Content,
 		TS:      msg.Timestamp,
 		ModCert: modCert.Signatures, // correct
-		PubKey:  publicKey,          // Ensure public key is in the cert
 	}
 
 	// Serialize MsgCert for signing
@@ -54,7 +55,7 @@ func (c *Core) SendMessage(content string) error {
 	msgCert.Sign = signature
 
 	// Print the final message certificate
-	fmt.Println("✅ Final MsgCert:", msgCert)
+	fmt.Println("\n✅ Final MsgCert:", msgCert)
 
 	// Send to Storage
 	err = storeMessage(msgCert)

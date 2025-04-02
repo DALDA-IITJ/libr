@@ -1,5 +1,7 @@
 package core
 
+import "client/core/config"
+
 type Core struct {
 }
 
@@ -14,7 +16,6 @@ type MsgCert struct {
 	TS      string    `json:"ts"`
 	ModCert []ModSign `json:"mod_cert"`
 	Sign    string    `json:"sign"`
-	PubKey  string    `json:"publicKey"`
 }
 
 // DatabaseNode represents a database node in the network.
@@ -50,6 +51,10 @@ type ModCert struct {
 	Msg        string
 	Timestamp  string
 	Signatures []ModSign // Only stores {PublicKey, Signature}
+}
+
+func InitCore() {
+	config.LoadEnv() // Load .env when core initializes
 }
 
 func NewCore() *Core {

@@ -2,10 +2,11 @@ package core
 
 import (
 	"bytes"
-	"client/core/blockchain"
+	// "client/core/blockchain"
 	"encoding/json"
 	"fmt"
-	"log"
+
+	// "log"
 	"net/http"
 	"sync"
 )
@@ -13,13 +14,16 @@ import (
 // storeMessage stores the message in multiple database nodes
 func storeMessage(msgCert MsgCert) error {
 	// Fetch simulated database nodes
-	relevantTxs, errX := blockchain.FetchBlockchain(msgCert.TS)
+	// relevantTxs, errX := blockchain.FetchBlockchain(msgCert.TS)
 
-	if errX != nil {
-		log.Fatal("❌ Error loading blockchain data:", errX)
-	}
+	// if errX != nil {
+	// 	log.Fatal("❌ Error loading blockchain data:", errX)
+	// }
 
-	dbNodes := fetchDatabaseNodes(relevantTxs) // You will replace this with a real query to blockchain
+	// dbNodes := fetchDatabaseNodes(relevantTxs) // You will replace this with a real query to blockchain
+
+	dbNodes := fetchDBTest()
+	fmt.Printf("Fetched db nodes...")
 
 	// Channel to collect errors
 	errorChannel := make(chan error, len(dbNodes))
@@ -32,6 +36,8 @@ func storeMessage(msgCert MsgCert) error {
 
 		go func(dbNode DatabaseNode) {
 			defer wg.Done()
+
+			fmt.Printf("Fetching URL http://%s:%s/store", dbNode.IP, dbNode.Port)
 
 			url := fmt.Sprintf("http://%s:%s/store", dbNode.IP, dbNode.Port)
 
@@ -74,3 +80,13 @@ func storeMessage(msgCert MsgCert) error {
 	return nil
 }
 
+func fetchDBTest() []DatabaseNode {
+
+	fmt.Printf("Fetching mods...")
+
+	return []DatabaseNode{
+		{"localhost", "8080"},
+		{"localhost", "8081"},
+		// {"localhost", "8082", "PublicKey3"},
+	}
+}
