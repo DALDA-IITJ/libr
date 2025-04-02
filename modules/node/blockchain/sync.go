@@ -1,8 +1,6 @@
 package blockchain
 
-import (
-	logger "libr/core"
-)
+import "node/utils/logger"
 
 type Blockchain struct {
 	State     string
@@ -11,7 +9,7 @@ type Blockchain struct {
 
 var BlockchainState *Blockchain
 
-//todo
+// todo
 func Sync(time int) error {
 	var err error
 	BlockchainState, err = GetBlockchainStateAt(time)
