@@ -1,23 +1,15 @@
 package core
 
 import (
-	"client/core/blockchain"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"sync"
 )
 
 func fetchMessages(timestamp string) ([]Message, error) {
 	// Fetch the database nodes (simulated for now)
-	relevantTxs, errX := blockchain.FetchBlockchain(timestamp)
-
-	if errX != nil {
-		log.Fatal("❌ Error loading blockchain data:", errX)
-	}
-
-	dbNodes := fetchDatabaseNodes(relevantTxs)
+	dbNodes := fetchDatabaseNodes(RelevantTxs, timestamp)
 
 	// Channel to collect responses
 	responseChannel := make(chan []Message, len(dbNodes))

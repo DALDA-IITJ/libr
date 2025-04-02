@@ -75,7 +75,7 @@ func FetchBlockchain(timestamp string) ([]Transaction, error) {
 	var relevantTxs []Transaction
 	for _, block := range blockchainData.Blocks {
 		for _, tx := range block.Transactions {
-			if tx.Recipient == communityPublicKey && (tx.Data.Type == "DB_JOINED" || tx.Data.Type == "DB_LEFT") {
+			if tx.Recipient == communityPublicKey && (tx.Data.Type == "DB_JOINED" || tx.Data.Type == "DB_LEFT" || tx.Data.Type == "MOD_JOINED" || tx.Data.Type == "MOD_LEFT") {
 				relevantTxs = append(relevantTxs, tx)
 			}
 		}

@@ -7,8 +7,11 @@ import (
 	"strconv"
 	"time"
 
+	"client/core/blockchain"
 	"client/core/crypto" // Import the crypto module
 )
+
+var RelevantTxs []blockchain.Transaction
 
 func (c *Core) SendMessage(content string) error {
 
@@ -30,6 +33,13 @@ func (c *Core) SendMessage(content string) error {
 		Content:   content,
 		Timestamp: strconv.FormatInt(time.Now().Unix(), 10),
 	}
+
+	RelevantTxs, err = blockchain.FetchBlockchain(msg.Timestamp)
+
+	if err != nil {
+		log.Fatal("❌ Error loading blockchain data:", err)
+	}
+
 	// Send to Moderation
 	modCert, err := SendToModerators(msg.Content, msg.Timestamp)
 	if err != nil {

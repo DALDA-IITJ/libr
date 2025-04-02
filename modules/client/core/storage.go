@@ -37,7 +37,7 @@ func storeMessage(msgCert MsgCert) error {
 		go func(dbNode DatabaseNode) {
 			defer wg.Done()
 
-			fmt.Printf("Fetching URL http://%s:%s/store", dbNode.IP, dbNode.Port)
+			fmt.Printf("Fetching URL http://%s:%s/store\n", dbNode.IP, dbNode.Port)
 
 			url := fmt.Sprintf("http://%s:%s/store", dbNode.IP, dbNode.Port)
 
@@ -82,7 +82,7 @@ func storeMessage(msgCert MsgCert) error {
 
 func fetchDBTest() []DatabaseNode {
 
-	fmt.Printf("Fetching mods...")
+	fmt.Printf("Fetching dbs...\n")
 
 	return []DatabaseNode{
 		{"localhost", "8080"},
