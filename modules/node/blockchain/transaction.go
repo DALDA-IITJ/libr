@@ -4,11 +4,11 @@ import (
 	"crypto/ecdsa"
 	"crypto/rand"
 	"crypto/sha256"
-	logger "libr/core"
-	"libr/modules/node/utils"
+	"node/utils"
+	"node/utils/logger"
 )
 
-type Transaction struct {
+type Txn struct {
 	Sender    string `json:"sender"`
 	Recipient string `json:"recipient"`
 	Amount    int    `json:"amt"`
@@ -23,12 +23,12 @@ func RegisterNode() error {
 	amount := getAmount()
 	data := getData()
 	nonce := getNonce()
-	signature, err := makeSignature(data)
+	signature, err := makeSign(data)
 	if err != nil {
 		logger.Error("Failed to create signature: " + err.Error())
 		return err
 	}
-	transaction := Transaction{
+	txn := Txn{
 		Sender:    sender,
 		Recipient: recipient,
 		Amount:    amount,
@@ -37,7 +37,7 @@ func RegisterNode() error {
 		Signature: signature,
 	}
 
-	err = SendTransaction(transaction)
+	err = SendTxn(txn)
 	if err != nil {
 		logger.Error("Failed to send transaction: " + err.Error())
 		return err
@@ -49,9 +49,8 @@ func RegisterNode() error {
 
 // todo
 func getSender() string {
-	// Get public key from key.json and return it
-
-	return "sender_public_key"
+	publicKey := utils.PublicKey
+	return string(publicKey.X.Bytes()) + string(publicKey.Y.Bytes())
 }
 
 // todo
@@ -76,14 +75,9 @@ func getNonce() int {
 }
 
 // todo
-func makeSignature(data string) (string, error) {
+func makeSign(data string) (string, error) {
 
-	privateKey, err := utils.GetPrivateKey()
-	if err != nil {
-		logger.Error("Failed to retrieve private key: " + err.Error())
-		return "", err
-	}
-
+	privateKey := utils.PrivateKey
 	hash := sha256.Sum256([]byte(data))
 
 	r, s, err := ecdsa.Sign(rand.Reader, &privateKey, hash[:])
