@@ -34,7 +34,7 @@ func (c *Core) SendMessage(content string) error {
 		Timestamp: strconv.FormatInt(time.Now().Unix(), 10),
 	}
 
-	RelevantTxs, err = blockchain.FetchBlockchain(msg.Timestamp)
+	// RelevantTxs, err = blockchain.FetchBlockchain(msg.Timestamp)
 
 	if err != nil {
 		log.Fatal("❌ Error loading blockchain data:", err)
