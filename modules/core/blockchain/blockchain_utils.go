@@ -83,3 +83,43 @@ func FetchBlockchain(timestamp string) ([]Transaction, error) {
 
 	return relevantTxs, nil
 }
+
+func SendTransaction(tx Transaction) error {
+	// blockchainURL := os.Getenv("BLOCKCHAIN_URL") // Example: "http://127.0.0.1:5000"
+
+	// Construct request URL
+	// url := fmt.Sprintf("%s/blockchain/submit-txn", blockchainURL)
+
+	// body := map[string]interface{}{
+	// 	"sender":    tx.Sender,
+	// 	"recipient": tx.Recipient,
+	// 	"amt":       tx.Amount,
+	// 	"data":      tx.Data,
+	// 	"nonce":     tx.Nonce,
+	// 	"sign":      tx.Sign,
+	// }
+
+	// jsonBody, err := json.Marshal(body)
+	// if err != nil {
+	// 	return fmt.Errorf("failed to encode transaction: %v", err)
+	// }
+	// Make HTTP GET request
+	// resp, err := http.Post(url, "application/json", bytes.NewReader(jsonBody))
+	// if err != nil {
+	// 	return fmt.Errorf("failed to fetch blockchain: %v", err)
+	// }
+	// defer resp.Body.Close()
+
+	// responseBody, err := io.ReadAll(resp.Body)
+	// if err != nil {
+	// 	return fmt.Errorf("failed to read response: %v", err)
+	// }
+
+	// responseBody := []byte(`{"status": "success"}`)
+
+	// if resp.StatusCode != http.StatusOK {
+	// 	return fmt.Errorf("failed to submit transaction: %s", string(responseBody))
+	// }
+
+	return nil
+}
