@@ -21,7 +21,7 @@
     - The server validates each module certificate (`mod_cert[i]`) and each mod is different.
 8. **Server side Time verification with buffer**:
     - The server verifies the time using a buffer.
-8. **Storage and Response**: 
+9. **Storage and Response**: 
     - The server stores the data and sends an appropriate response back to the client.
 
 ---
