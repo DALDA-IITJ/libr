@@ -1,0 +1,11 @@
+Client.UI -> Client.Core: Send Message : content string
+
+Client -> Mod (2M+1 many times): send {msg, timestamp} for moderation
+ -- aggregate M valid Mod Signs 
+
+Client -> DB (R many times): send msgCert for storage 
+
+Client.UI -> Client.Core: Fetch Messages by timestamp : timestamp string
+
+Client -> DB (R many times): ask for message array
+-- Show to user
