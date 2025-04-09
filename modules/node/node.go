@@ -28,7 +28,7 @@ func main() {
 	worker.StartWorkerPool(1)
 
 	router := api.SetUpRoutes()
-	err = http.ListenAndServe(":8080", router)
+	err = http.ListenAndServe(":8082", router)
 	if err != nil {
 		logger.Fatal(err.Error())
 	}

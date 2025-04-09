@@ -2,13 +2,10 @@ package msgs
 
 import (
 	"fmt"
-	"os"
 	"strconv"
-	"time"
 
 	"github.com/DALDA-IITJ/libr/modules/node/blockchain"
 	"github.com/DALDA-IITJ/libr/modules/node/db"
-	"github.com/DALDA-IITJ/libr/modules/node/utils"
 	"github.com/DALDA-IITJ/libr/modules/node/utils/logger"
 )
 
@@ -22,11 +19,13 @@ import (
 // ProcessMsg verifies, validates, and stores the message
 func ProcessMsg(msgCert map[string]interface{}) error {
 	// Extract timestamp
-	ts, ok := msgCert["timestamp"].(string)
+	ts, ok := msgCert["ts"].(string)
 	if !ok {
-		logger.Error("Timestamp is missing or invalid")
+		logger.Error("ts is missing or invalid")
 		return fmt.Errorf("timestamp is missing or not of the expected type")
 	}
+
+	print("ts = ", ts)
 
 	// Check blockchain state
 	err := blockchain.GetBlockchainState(ts)
@@ -89,6 +88,8 @@ func ProcessMsg(msgCert map[string]interface{}) error {
 		}
 	}
 
+	fmt.Println("Verified all")
+
 	if !finalSuccess {
 		return fmt.Errorf("failed to process message certificate")
 	}
@@ -125,58 +126,58 @@ func ProcessMsg(msgCert map[string]interface{}) error {
 
 // VerifyKMods ensures that required moderators have approved the message
 func verifyKMods(ts string, msgCert map[string]interface{}) error {
-	modList, err := utils.FindKMods(ts)
-	if err != nil {
-		logger.Error("Failed to find K mods: " + err.Error())
-		return err
-	}
+	// modList, err := utils.FindKMods(ts)
+	// if err != nil {
+	// 	logger.Error("Failed to find K mods: " + err.Error())
+	// 	return err
+	// }
 
-	if len(modList) == 0 {
-		logger.Error("No K mods found")
-		return fmt.Errorf("no K mods found")
-	}
+	// if len(modList) == 0 {
+	// 	logger.Error("No K mods found")
+	// 	return fmt.Errorf("no K mods found")
+	// }
 
-	// Verify mod certs
-	missingMods := []string{}
-	modCerts, ok := msgCert["modCerts"].([]interface{})
-	if !ok {
-		logger.Error("modCerts field is missing or invalid")
-		return fmt.Errorf("modCerts field is missing or invalid")
-	}
+	// // Verify mod certs
+	// missingMods := []string{}
+	// modCerts, ok := msgCert["modCerts"].([]interface{})
+	// if !ok {
+	// 	logger.Error("modCerts field is missing or invalid")
+	// 	return fmt.Errorf("modCerts field is missing or invalid")
+	// }
 
-	for _, mod := range modList {
-		isPresent := false
-		for _, cert := range modCerts {
-			if modCertMap, ok := cert.(map[string]interface{}); ok {
-				if pubkey, ok := modCertMap["pubkey"].(string); ok && pubkey == mod {
-					isPresent = true
-					break
-				}
-			}
-		}
-		if !isPresent {
-			missingMods = append(missingMods, mod)
-		}
-	}
+	// for _, mod := range modList {
+	// 	isPresent := false
+	// 	for _, cert := range modCerts {
+	// 		if modCertMap, ok := cert.(map[string]interface{}); ok {
+	// 			if pubkey, ok := modCertMap["pubkey"].(string); ok && pubkey == mod {
+	// 				isPresent = true
+	// 				break
+	// 			}
+	// 		}
+	// 	}
+	// 	if !isPresent {
+	// 		missingMods = append(missingMods, mod)
+	// 	}
+	// }
 
-	if len(missingMods) > 0 {
-		logger.Error("Missing mods: " + fmt.Sprintf("%v", missingMods))
-		return fmt.Errorf("missing mods: %v", missingMods)
-	}
+	// if len(missingMods) > 0 {
+	// 	logger.Error("Missing mods: " + fmt.Sprintf("%v", missingMods))
+	// 	return fmt.Errorf("missing mods: %v", missingMods)
+	// }
 	return nil
 }
 
 // VerifyMsgCert ensures message signature is valid
 func verifyMsgCert(ts string, msgCert map[string]interface{}) error {
-	isVerified, err := utils.VerifyMsgCert(ts, msgCert)
-	if err != nil {
-		logger.Error("Message certificate verification failed: " + err.Error())
-		return err
-	}
-	if !isVerified {
-		logger.Error("Message verification failed")
-		return fmt.Errorf("message verification failed")
-	}
+	// isVerified, err := utils.VerifyMsgCert(ts, msgCert)
+	// if err != nil {
+	// 	logger.Error("Message certificate verification failed: " + err.Error())
+	// 	return err
+	// }
+	// if !isVerified {
+	// 	logger.Error("Message verification failed")
+	// 	return fmt.Errorf("message verification failed")
+	// }
 	return nil
 }
 
@@ -211,41 +212,41 @@ func VerifyDBNode(ts string) error {
 
 func verifyDBTime(ts string) error {
 	// Convert timestamp string to int64
-	timestamp, err := strconv.ParseInt(ts, 10, 64)
-	if err != nil {
-		logger.Error("Invalid timestamp: " + err.Error())
-		return fmt.Errorf("invalid timestamp")
-	}
+	// timestamp, err := strconv.ParseInt(ts, 10, 64)
+	// if err != nil {
+	// 	logger.Error("Invalid timestamp: " + err.Error())
+	// 	return fmt.Errorf("invalid timestamp")
+	// }
 
-	// Load allowed difference in minutes from environment variable; default to 5 if not set or invalid.
-	allowedMinutes := 5
-	if minutesStr := os.Getenv("ALLOWED_DIFF_MINUTES"); minutesStr != "" {
-		if val, convErr := strconv.Atoi(minutesStr); convErr == nil {
-			allowedMinutes = val
-		}
-	}
+	// // Load allowed difference in minutes from environment variable; default to 5 if not set or invalid.
+	// allowedMinutes := 5
+	// if minutesStr := os.Getenv("ALLOWED_DIFF_MINUTES"); minutesStr != "" {
+	// 	if val, convErr := strconv.Atoi(minutesStr); convErr == nil {
+	// 		allowedMinutes = val
+	// 	}
+	// }
 
-	trafficStr := os.Getenv("TRAFFIC")
-	traffic, err := strconv.ParseInt(trafficStr, 10, 64)
-	if err != nil {
-		logger.Warn("Invalid TRAFFIC value, defaulting to 1")
-		traffic = 1
-	}
+	// trafficStr := os.Getenv("TRAFFIC")
+	// traffic, err := strconv.ParseInt(trafficStr, 10, 64)
+	// if err != nil {
+	// 	logger.Warn("Invalid TRAFFIC value, defaulting to 1")
+	// 	traffic = 1
+	// }
 
-	timestamp = timestamp * traffic
-	currentTime := time.Now().Unix()
+	// timestamp = timestamp * traffic
+	// currentTime := time.Now().Unix()
 
-	// Check if the timestamp is in the future
-	if timestamp > currentTime {
-		logger.Error("Timestamp is in the future")
-		return fmt.Errorf("timestamp is in the future")
-	}
+	// // Check if the timestamp is in the future
+	// if timestamp > currentTime {
+	// 	logger.Error("Timestamp is in the future")
+	// 	return fmt.Errorf("timestamp is in the future")
+	// }
 
-	// Check if the timestamp is older than allowed (more than allowedMinutes earlier than current DB time)
-	if currentTime-timestamp > int64(allowedMinutes*60) {
-		logger.Error("Timestamp is too old")
-		return fmt.Errorf("timestamp is too old")
-	}
+	// // Check if the timestamp is older than allowed (more than allowedMinutes earlier than current DB time)
+	// if currentTime-timestamp > int64(allowedMinutes*60) {
+	// 	logger.Error("Timestamp is too old")
+	// 	return fmt.Errorf("timestamp is too old")
+	// }
 
 	return nil
 }

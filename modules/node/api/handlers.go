@@ -14,12 +14,16 @@ import (
 
 func SaveMsgHandler(w http.ResponseWriter, r *http.Request) {
 
+	logger.Info("got req")
+
 	body, err := io.ReadAll((r.Body))
 	if err != nil {
 		logger.Error("Failed to read request body: " + err.Error())
 		resp.SendResponse(w, http.StatusBadRequest, "Failed to read request body", err, nil)
 		return
 	}
+
+	logger.Info(string(body))
 
 	err = worker.AddToQueue(body)
 	if err != nil {

@@ -3,7 +3,8 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
-	"node/utils/logger"
+
+	"github.com/DALDA-IITJ/libr/modules/node/utils/logger"
 )
 
 var MsgCert = make(map[string]interface{})
