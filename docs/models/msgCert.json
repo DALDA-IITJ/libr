@@ -1,13 +1,12 @@
 {
-    "sender": "senderpk",
-    "mod_cert": [
-        {
-            "mod_sign": {
-                "msg": "msg",
-                "ts_cert": "ts_cert_obj",
-                "sign": "sign"
-            }
-        }
-    ],
-    "sign":"sign"
+  "sender": "senderpk",
+  "msg": "msg",
+  "timestamp": "timestamp",
+  "mod_cert": [
+    {
+      "pubkey": "pubkey",
+      "sign": "sign"
+    }
+  ],
+  "sign": "sign"
 }

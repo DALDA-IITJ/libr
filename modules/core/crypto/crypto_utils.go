@@ -10,6 +10,8 @@ import (
 	"fmt"
 	"math/big"
 	"os"
+
+	"github.com/DALDA-IITJ/libr/modules/core/config"
 )
  
 // GenerateKeys generates a new ECDSA key pair and stores it in the environment.
@@ -22,10 +24,26 @@ func GenerateKeys() error {
 	privateKeyHex := hex.EncodeToString(privateKey.D.Bytes())
 	publicKeyHex := fmt.Sprintf("%x%x", privateKey.PublicKey.X, privateKey.PublicKey.Y)
 
-	os.Setenv("PRIVATE_KEY", privateKeyHex)
-	os.Setenv("PUBLIC_KEY", publicKeyHex)
+	// Check if .env file exists
+	if _, err := os.Stat(".env"); os.IsNotExist(err) {
+		// Create the .env file if it doesn't exist
+		file, err := os.Create(".env")
+		if err != nil {
+			return err
+		}
+		defer file.Close()
+	}
 
-	fmt.Println("🔑 New Keys Generated:")
+	// Set the environment variables in the .env file
+	err = os.WriteFile(".env", []byte(fmt.Sprintf("PRIVATE_KEY=%s\nPUBLIC_KEY=%s\n", privateKeyHex, publicKeyHex)), 0644)
+	if err != nil {
+		return err
+	}
+
+	// Set the environment variables in the current process
+	config.LoadEnv()
+
+	fmt.Println("🔑 New Keys Generated and stored in .env file:")
 	fmt.Println("Private Key:", privateKeyHex)
 	fmt.Println("Public Key:", publicKeyHex)
 

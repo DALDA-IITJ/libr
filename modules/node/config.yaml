@@ -1,0 +1,51 @@
+dbnode:
+  # Database configurations
+  database:
+    host: "localhost"
+    port: 5432
+    user: "admin"
+    password: "password"
+    dbname: "dbnode"
+    sslmode: "disable" 
+    # host: "${DB_HOST:-localhost}" # Default to localhost if not set
+    # port: ${DB_PORT:-5432} # Default to 5432 if not set
+    # user: "${DB_USER:-admin}" # Default to 'admin' if not set
+    # password: "${DB_PASSWORD:-password}" # Default password
+    # dbname: "${DB_NAME:-dbnode}" # Default to 'dbnode'
+    # sslmode: "${DB_SSLMODE:-disable}" # Default to 'disable' for simplicity
+
+  # Blockchain and Transaction Configurations
+  blockchain:
+    public_key: "${BLOCKCHAIN_PUBLIC_KEY}"  # Ensure public key is set in env
+    private_key: "${BLOCKCHAIN_PRIVATE_KEY}"  # Ensure private key is set in env
+    
+  node:
+    node_ip: "${NODE_IP:-127.0.0.1}"  # Default to localhost if not set
+    node_port: ${NODE_PORT:-8080}     # Default to 8080 if not set
+
+  # Transaction Management
+  transaction:
+    nonce: 0 # Number of transactions this node has sent (increments with each transaction)
+    transaction_fee: 0.01 # Transaction fee for blockchain interactions (adjust as needed)
+
+  # Network Settings
+  network:
+    listen_ip: "0.0.0.0" # IP address to listen for incoming messages (can use 0.0.0.0 for any)
+    listen_port: ${NODE_LISTEN_PORT:-8081} # Port to listen for incoming requests (default to 8081)
+    connection_timeout: 30 # Connection timeout in seconds for blockchain and DB operations
+
+    # Security and Encryption
+    security:
+      certificate_path: "${CERTIFICATE_PATH:-/path/to/certificates}" # Path to certificates for encryption/validation
+      encryption_key: "${ENCRYPTION_KEY:-your_encryption_key_here}" # Key for encrypting sensitive data
+
+    # Logging Configuration
+    logging:
+      level: "${LOG_LEVEL:-info}" # Logging level (e.g., "info", "warn", "error")
+      log_file: "${LOG_FILE_PATH:-/var/log/dbnode/dbnode.log}" # Log file location
+
+    # Miscellaneous Settings
+    misc:
+      max_message_size: ${MAX_MESSAGE_SIZE:-1048576} # Max message size to be handled (in bytes, e.g., 1MB)
+      sync_interval: ${SYNC_INTERVAL:-60} # Interval to sync with the blockchain (in seconds)
+      enable_health_check: ${ENABLE_HEALTH_CHECK:-true} # Whether to enable a health check endpoint (true/false)
