@@ -1,9 +1,11 @@
-module client
+module github.com/DALDA-IITJ/libr/modules/client
 
-go 1.23.5
+go 1.24.1
+
+toolchain go1.24.2
 
 require (
-	github.com/joho/godotenv v1.5.1
+	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/spf13/cobra v1.9.1
 )
 
@@ -11,3 +13,5 @@ require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.6 // indirect
 )
+
+require github.com/DALDA-IITJ/libr/modules/core v0.0.0-20250402151745-2d07ac743102

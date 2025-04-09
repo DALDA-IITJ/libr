@@ -1,12 +1,13 @@
 package core
 
 import (
-	"client/core/blockchain"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/json"
 	"math/rand"
 	"sort"
+
+	"github.com/DALDA-IITJ/libr/modules/core/blockchain"
 )
 
 // func fetchDatabaseNodes(RelevantTxs []blockchain.Transaction, timestamp string, k int) []DatabaseNode {

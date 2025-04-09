@@ -1,8 +1,8 @@
 package main
 
 import (
-	"client/UI/CLI/cmd"
-	"client/core"
+	"github.com/DALDA-IITJ/libr/modules/client/UI/CLI/cmd"
+	"github.com/DALDA-IITJ/libr/modules/client/core"
 )
 
 func main() {
