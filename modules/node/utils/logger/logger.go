@@ -36,36 +36,36 @@ func logMessage(level LogLevel, color string, message string, includeTimestamp b
 	log.Printf("\n%s%s[%s]%s %s%s\n", color, timestamp, level, Reset, message, Reset)
 }
 
-// Debug logs a message at the debug level
+// Debug logs a message at the debug level with a bug emoji
 func Debug(message string) {
-	logMessage(DebugLevel, Blue, message, true)
+	logMessage(DebugLevel, Blue, "🐞  "+message, true)
 }
 
-// Info logs a message at the info level
+// Info logs a message at the info level with an information emoji
 func Info(message string) {
-	logMessage(InfoLevel, Green, message, true)
+	logMessage(InfoLevel, Green, "ℹ️  "+message, true)
 }
 
-// Warn logs a message at the warning level
+// Warn logs a message at the warning level with a warning emoji
 func Warn(message string) {
-	logMessage(WarnLevel, Yellow, message, true)
+	logMessage(WarnLevel, Yellow, "⚠️  "+message, true)
 }
 
-// Error logs an error message with file and line number
+// Error logs an error message with file and line number and a cross mark emoji
 func Error(message string) {
 	_, file, line, ok := runtime.Caller(1)
 	if ok {
 		message = message + " (at " + file + ":" + strconv.Itoa(line) + ")"
 	}
-	logMessage(ErrorLevel, Red, message, true)
+	logMessage(ErrorLevel, Red, "❌  "+message, true)
 }
 
-// Fatal logs a critical error message and exits the application
+// Fatal logs a critical error message, adds a skull emoji, and exits the application
 func Fatal(message string) {
 	_, file, line, ok := runtime.Caller(1)
 	if ok {
 		message = message + " (at " + file + ":" + strconv.Itoa(line) + ")"
 	}
-	logMessage(ErrorLevel, Purple, message, true)
+	logMessage(ErrorLevel, Purple, "💀 "+message, true)
 	log.Fatal(message)
 }

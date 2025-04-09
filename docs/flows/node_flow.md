@@ -17,9 +17,11 @@
     - The server receives and verifies the blockchain data.
 5. **Database Validation**: 
     - The server checks the database consistency using `findDb`.
-6. **Module Certificate Validation**: 
-    - The server validates each module certificate (`mod_cert[i]`).
-7. **Storage and Response**: 
+7. **Module Certificate Validation**: 
+    - The server validates each module certificate (`mod_cert[i]`) and each mod is different.
+8. **Server side Time verification with buffer**:
+    - The server verifies the time using a buffer.
+9. **Storage and Response**: 
     - The server stores the data and sends an appropriate response back to the client.
 
 ---
