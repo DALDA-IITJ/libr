@@ -167,3 +167,6 @@ dist
 # End of https://www.toptal.com/developers/gitignore/api/go,node
 
 playground/
+
+*.exe
+*.env
