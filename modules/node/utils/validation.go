@@ -102,9 +102,9 @@ func verifyModCerts(msgCert map[string]interface{}) error {
 		return err
 	}
 
-	ts, ok := msgCert["timestamp"].(string)
+	ts, ok := msgCert["ts"].(string)
 	if !ok {
-		err := fmt.Errorf("timestamp is missing or not of the expected type")
+		err := fmt.Errorf("ts is missing or not of the expected type")
 		logger.Error(err.Error())
 		return err
 	}
@@ -117,8 +117,8 @@ func verifyModCerts(msgCert map[string]interface{}) error {
 	}
 
 	for _, modCert := range modCerts {
-		modPubKey := modCert["mod_pub_key"]
-		modSign := modCert["mod_sign"]
+		modPubKey := modCert["public_key"]
+		modSign := modCert["sign"]
 
 		message := map[string]interface{}{
 			"msg":       msg,

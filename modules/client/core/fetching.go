@@ -9,7 +9,7 @@ import (
 
 func fetchMessages(timestamp string) ([]Message, error) {
 	// Fetch the database nodes (simulated for now)
-	dbNodes := fetchDatabaseNodes(RelevantTxs, timestamp)
+	dbNodes := fetchDatabaseNodes(RelevantTxs, timestamp, 3)
 
 	// Channel to collect responses
 	responseChannel := make(chan []Message, len(dbNodes))

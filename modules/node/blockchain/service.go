@@ -15,16 +15,16 @@ import (
 var BlockchainStates map[string][]blockchain.Transaction
 
 func GetBlockchainState(time string) error {
-	BlockchainStates[time] = []blockchain.Transaction{}
+	// BlockchainStates[time] = []blockchain.Transaction{}
 
-	txs, err := blockchain.FetchBlockchain(time)
-	if err != nil {
-		logger.Error("Failed to fetch blockchain: " + err.Error())
-		return err
-	}
+	// txs, err := blockchain.FetchBlockchain(time)
+	// if err != nil {
+	// 	logger.Error("Failed to fetch blockchain: " + err.Error())
+	// 	return err
+	// }
 
-	BlockchainStates[time] = txs
-	logger.Info("Blockchain state fetched successfully for time: " + string(time))
+	// BlockchainStates[time] = txs
+	// logger.Info("Blockchain state fetched successfully for time: " + string(time))
 	return nil
 }
 
@@ -68,11 +68,15 @@ func RegisterNode() {
 		Sign:      sign,
 	}
 
-	err = blockchain.SendTransaction(tx)
+	err = SendTransaction(tx)
 	if err != nil {
 		logger.Error("Failed to send transaction: " + err.Error())
 		return
 	}
 
 	logger.Info("DB JOIN Transaction sent successfully")
+}
+
+func SendTransaction(tx blockchain.Transaction) error {
+	return nil
 }

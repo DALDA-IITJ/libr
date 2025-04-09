@@ -28,8 +28,7 @@ func main() {
 	worker.StartWorkerPool(1)
 
 	router := api.SetUpRoutes()
-	logger.Info("Starting HTTP server on port 8080...")
-	err = http.ListenAndServe(":8080", router)
+	err = http.ListenAndServe(":8082", router)
 	if err != nil {
 		logger.Fatal("HTTP server failed to start: " + err.Error())
 	}

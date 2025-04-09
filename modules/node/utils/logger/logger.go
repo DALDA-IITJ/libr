@@ -63,6 +63,16 @@ func Error(message string) {
 // Fatal logs a critical error message, adds a skull emoji, and exits the application
 func Fatal(message string) {
 	_, file, line, ok := runtime.Caller(1)
+	// ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	// defer cancel()
+
+	// // Simulate a long-running task
+	// select {
+	// case <-time.After(20 * time.Second):
+	// 	fmt.Println("Task completed")
+	// case <-ctx.Done():
+	// 	fmt.Println("Timeout:", ctx.Err())
+	// }
 	if ok {
 		message = message + " (at " + file + ":" + strconv.Itoa(line) + ")"
 	}

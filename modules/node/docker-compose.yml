@@ -20,8 +20,8 @@ services:
     #     - action: sync
     #     - path: .
     #     - ignore: tmp/
-    volumes:
-      - ./:/app
+    # volumes:
+    #   - ./:/app
     environment:
       - DB_HOST=db
       - DB_PORT=5432

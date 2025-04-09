@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"client/core"
 	"fmt"
 
+	"github.com/DALDA-IITJ/libr/modules/client/core"
 	"github.com/spf13/cobra"
 )
 

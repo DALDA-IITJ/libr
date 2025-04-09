@@ -1,6 +1,6 @@
 package core
 
-import "client/core/config"
+import "github.com/DALDA-IITJ/libr/modules/core/config"
 
 type Core struct {
 }

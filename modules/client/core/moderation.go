@@ -12,7 +12,7 @@ import (
 // FetchModerators simulates retrieving moderator details.
 // TODO: Replace with real blockchain data fetching.
 func FetchModerators() []Moderator {
-	
+
 	fmt.Printf("Fetching mods...")
 
 	return []Moderator{
