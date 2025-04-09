@@ -45,7 +45,7 @@ app.post("/moderate", (req, res) => {
     });
 });
 
-app.post("/store", (req, res) => {
+app.post("/db/savemsg", (req, res) => {
     console.log(req.body);
     res.status(200).json();
 })
