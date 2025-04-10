@@ -8,8 +8,11 @@ import (
 )
 
 func fetchMessages(timestamp string) ([]Message, error) {
+	println("timestamp = %s", timestamp)
+
 	// Fetch the database nodes (simulated for now)
-	dbNodes := fetchDatabaseNodes(RelevantTxs, timestamp, 3)
+	// dbNodes := fetchDatabaseNodes(RelevantTxs, timestamp, 3)
+	dbNodes := fetchDBTest()
 
 	// Channel to collect responses
 	responseChannel := make(chan []Message, len(dbNodes))
@@ -26,7 +29,7 @@ func fetchMessages(timestamp string) ([]Message, error) {
 		go func(dbNode DatabaseNode) {
 			defer wg.Done()
 
-			url := fmt.Sprintf("http://%s:%s/get/%s", dbNode.IP, dbNode.Port, timestamp)
+			url := fmt.Sprintf("http://%s:%s/fetch/%s", dbNode.IP, dbNode.Port, timestamp)
 
 			resp, err := http.Get(url)
 			if err != nil {
@@ -42,15 +45,26 @@ func fetchMessages(timestamp string) ([]Message, error) {
 			}
 
 			// Read the response body
-			var messageResponse MessageResponse
+			var messageResponse struct {
+				Data    []Message   `json:"data"`
+				Error   interface{} `json:"error"` // Use the appropriate type if needed
+				Message string      `json:"message"`
+				Status  int         `json:"status"`
+			}
 			err = json.NewDecoder(resp.Body).Decode(&messageResponse)
 			if err != nil {
 				errorChannel <- fmt.Errorf("error decoding response from %s: %v", dbNode.IP, err)
 				return
 			}
 
+			// Check if there's an error in the response
+			if messageResponse.Error != nil {
+				errorChannel <- fmt.Errorf("error in response from %s: %v", dbNode.IP, messageResponse.Error)
+				return
+			}
+
 			// Send the messages to the response channel
-			responseChannel <- messageResponse.Messages
+			responseChannel <- messageResponse.Data
 		}(dbNode)
 	}
 

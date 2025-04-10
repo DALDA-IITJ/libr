@@ -85,7 +85,7 @@ func fetchDBTest() []DatabaseNode {
 	fmt.Printf("Fetching dbs...\n")
 
 	return []DatabaseNode{
-		{"localhost", "8082"},
+		{"localhost", "8080"},
 		{"localhost", "8081"},
 		// {"localhost", "8082", "PublicKey3"},
 	}
