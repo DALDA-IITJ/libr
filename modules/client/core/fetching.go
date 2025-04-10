@@ -10,8 +10,16 @@ import (
 func fetchMessages(timestamp string) ([]Message, error) {
 	println("timestamp = %s", timestamp)
 
-	// Fetch the database nodes (simulated for now)
+	// Fetch database nodes
+	// relevantTxs, errX := blockchain.FetchBlockchain(msgCert.TS)
+
+	// if errX != nil {
+	// 	log.Fatal("❌ Error loading blockchain data:", errX)
+	// }
+
 	// dbNodes := fetchDatabaseNodes(RelevantTxs, timestamp, 3)
+
+	// Fetch the database nodes (simulated for now)
 	dbNodes := fetchDBTest()
 
 	// Channel to collect responses
@@ -29,7 +37,7 @@ func fetchMessages(timestamp string) ([]Message, error) {
 		go func(dbNode DatabaseNode) {
 			defer wg.Done()
 
-			url := fmt.Sprintf("http://%s:%s/fetch/%s", dbNode.IP, dbNode.Port, timestamp)
+			url := fmt.Sprintf("http://%s:%s/db/getmsg/%s", dbNode.IP, dbNode.Port, timestamp)
 
 			resp, err := http.Get(url)
 			if err != nil {

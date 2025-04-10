@@ -16,9 +16,9 @@ func FetchModerators() []Moderator {
 	fmt.Printf("Fetching mods...")
 
 	return []Moderator{
-		{"localhost", "8080", "PublicKey1"},
-		{"localhost", "8081", "PublicKey2"},
-		// {"localhost", "8082", "PublicKey3"},
+		{"172.31.105.135", "8080", "04973bf9510e21e7badb101bafee7b79bf9696ecbce9d9597354224bb1c08e38fb5ff47e04da3705bfd3e322851b800d808674758ec21038e73adf3a227fe786a8"},
+		{"172.31.79.66", "8080", "043aa3676f77bd5af04af81e7aff09e53433b9d4a4db259867be7da5a54e1cf4441831604e0a2639505feab3dab3113d5648929252d8398ea67f71843fd33a0260"},
+		{"172.31.87.47", "8080", "04227547a108c40745cf479c54e430da76a75f2350772370020c10832d4de14409f6996cfff613048c4b6efe1251b4bbda86c0222a983b35c941826f2cf965c77c"},
 	}
 }
 

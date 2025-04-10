@@ -29,9 +29,15 @@ func (c *Core) SendMessage(content string) error {
 	}
 	fmt.Printf("Loaded Public Key\n")
 
+	// msg := UserMessage{
+	// 	Content:   content,
+	// 	Timestamp: strconv.FormatInt(time.Now().Unix(), 10),
+	// }
+
+	bucket := time.Now().Unix() / 100
 	msg := UserMessage{
 		Content:   content,
-		Timestamp: strconv.FormatInt(time.Now().Unix(), 10),
+		Timestamp: strconv.FormatInt(bucket, 10), // Store bucket instead of full timestamp
 	}
 
 	// RelevantTxs, err = blockchain.FetchBlockchain(msg.Timestamp)

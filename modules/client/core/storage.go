@@ -13,7 +13,7 @@ import (
 
 // storeMessage stores the message in multiple database nodes
 func storeMessage(msgCert MsgCert) error {
-	// Fetch simulated database nodes
+	// Fetch database nodes
 	// relevantTxs, errX := blockchain.FetchBlockchain(msgCert.TS)
 
 	// if errX != nil {
@@ -85,8 +85,8 @@ func fetchDBTest() []DatabaseNode {
 	fmt.Printf("Fetching dbs...\n")
 
 	return []DatabaseNode{
-		{"localhost", "8080"},
-		{"localhost", "8081"},
-		// {"localhost", "8082", "PublicKey3"},
+		{"172.31.105.135", "8082"},
+		{"172.31.79.66", "8082"},
+		{"172.31.87.47", "8082"},
 	}
 }

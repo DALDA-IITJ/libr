@@ -7,7 +7,7 @@ const { ec: EC } = require("elliptic");
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = 8080;
 
 // Setup secp256k1
 const ec = new EC("secp256k1");

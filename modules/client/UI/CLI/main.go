@@ -15,6 +15,10 @@ func main() {
 	repl()
 }
 
+func roundToHundred(ts int64) int64 {
+	return ts - (ts % 100)
+}
+
 // Read-Eval-Print Loop
 func repl() {
 	reader := bufio.NewReader(os.Stdin)
@@ -22,7 +26,7 @@ func repl() {
 	fmt.Println("Type 'help' for commands. Type '\\q' to quit.")
 	fmt.Println("===========================")
 
-	currentTimestamp := time.Now().Unix()
+	currentTimestamp := roundToHundred(time.Now().Unix())
 
 	for {
 		fmt.Print("> ")
@@ -50,7 +54,8 @@ func repl() {
 		switch command {
 		case "send":
 			handleSendCommand(args)
-			currentTimestamp = time.Now().Unix() // Update timestamp
+			// currentTimestamp = time.Now().Unix() // Update timestamp
+			currentTimestamp = roundToHundred(time.Now().Unix())
 		case "fetch", "f":
 			handleFetchCommand(currentTimestamp)
 		case "prev", "p":
@@ -100,7 +105,7 @@ func handleFetchCommand(timestamp int64) {
 
 func handlePrevCommand(timestamp int64) int64 {
 	core := core.NewCore()
-	messages, err := core.FetchMessages(fmt.Sprint(timestamp - 1)) // Assuming FetchMessages handles older timestamps
+	messages, err := core.FetchMessages(fmt.Sprint(timestamp - 100)) // Assuming FetchMessages handles older timestamps //100
 	if err != nil {
 		fmt.Println("Error fetching messages:", err)
 		return timestamp
@@ -113,7 +118,7 @@ func handlePrevCommand(timestamp int64) int64 {
 		for _, msg := range messages {
 			fmt.Printf("[%s] %s\n", time.Unix(timestamp, 0).Format("2006-01-02 15:04:05"), msg.Content)
 		}
-		timestamp = timestamp - 1 // Move to the previous timestamp
+		timestamp = timestamp - 100 // Move to the previous timestamp
 	}
 	fmt.Println("===============================\n")
 	return timestamp

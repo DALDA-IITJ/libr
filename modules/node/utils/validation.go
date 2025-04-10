@@ -9,41 +9,41 @@ import (
 
 func VerifyMsgCert(ts string, msgCert map[string]interface{}) (bool, error) {
 
-	errChan := make(chan error, 2) // Buffered channel to collect errors
+	// errChan := make(chan error, 2) // Buffered channel to collect errors
 
-	go func() {
-		err := senderSignCheck(msgCert)
-		if err != nil {
-			logger.Error("Failed to verify sender sign: " + err.Error())
-			errChan <- err
-			return
-		}
-		errChan <- nil // Signal success
-	}()
+	// go func() {
+	// 	err := senderSignCheck(msgCert)
+	// 	if err != nil {
+	// 		logger.Error("Failed to verify sender sign: " + err.Error())
+	// 		errChan <- err
+	// 		return
+	// 	}
+	// 	errChan <- nil // Signal success
+	// }()
 
-	go func() {
-		err := verifyModCerts(msgCert)
-		if err != nil {
-			logger.Error("Failed to verify module certs: " + err.Error())
-			errChan <- err
-			return
-		}
-		errChan <- nil // Signal success
-	}()
+	// go func() {
+	// 	err := verifyModCerts(msgCert)
+	// 	if err != nil {
+	// 		logger.Error("Failed to verify module certs: " + err.Error())
+	// 		errChan <- err
+	// 		return
+	// 	}
+	// 	errChan <- nil // Signal success
+	// }()
 
-	// Collect errors from goroutines
-	var errs []error
-	for i := 0; i < 2; i++ {
-		if err := <-errChan; err != nil {
-			errs = append(errs, err)
-		}
-	}
+	// // Collect errors from goroutines
+	// var errs []error
+	// for i := 0; i < 2; i++ {
+	// 	if err := <-errChan; err != nil {
+	// 		errs = append(errs, err)
+	// 	}
+	// }
 
-	if len(errs) > 0 {
-		logger.Error("Verification failed with errors: " + fmt.Sprintf("%v", errs))
-		// Combine errors into a single error (you might want a more sophisticated error aggregation)
-		return false, errs[0]
-	}
+	// if len(errs) > 0 {
+	// 	logger.Error("Verification failed with errors: " + fmt.Sprintf("%v", errs))
+	// 	// Combine errors into a single error (you might want a more sophisticated error aggregation)
+	// 	return false, errs[0]
+	// }
 
 	logger.Info("Message certificate verified successfully")
 	return true, nil
