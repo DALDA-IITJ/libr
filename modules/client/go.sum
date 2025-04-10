@@ -1,4 +1,6 @@
 github.com/DALDA-IITJ/libr/modules/core v0.0.0-20250409102112-2e123da95a8c h1:DdeLwj6xH6GLN4O/ptxWEFsBMZO/5/+6lFkJdH3E5vI=
 github.com/DALDA-IITJ/libr/modules/core v0.0.0-20250409102112-2e123da95a8c/go.mod h1:MfqzAHEkb0VK/ThpnHXxLdGIamM7H6wTripVaxg1k9A=
+github.com/DALDA-IITJ/libr/modules/core v0.1.0 h1:WaJQZ6Jt1Yry4MWMBkFfL3/FEi/F5PJJ/KiCQshH+1E=
+github.com/DALDA-IITJ/libr/modules/core v0.1.0/go.mod h1:MfqzAHEkb0VK/ThpnHXxLdGIamM7H6wTripVaxg1k9A=
 github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
 github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
