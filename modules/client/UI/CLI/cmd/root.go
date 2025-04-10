@@ -7,8 +7,8 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "cli",
-	Short: "CLI for sending and receiving messages",
+	Use:   "libr",
+	Short: "LIBR for sending and receiving messages",
 }
 
 func Execute() {
