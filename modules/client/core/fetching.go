@@ -37,7 +37,7 @@ func fetchMessages(timestamp string) ([]Message, error) {
 		go func(dbNode DatabaseNode) {
 			defer wg.Done()
 
-			url := fmt.Sprintf("http://%s:%s/db/getmsg/%s", dbNode.IP, dbNode.Port, timestamp)
+			url := fmt.Sprintf("http://%s:%s/db/getmsg?time=%s", dbNode.IP, dbNode.Port, timestamp)
 
 			resp, err := http.Get(url)
 			if err != nil {
