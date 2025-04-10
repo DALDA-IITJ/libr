@@ -13,7 +13,7 @@ import (
 
 	"github.com/DALDA-IITJ/libr/modules/core/config"
 )
-
+ 
 // GenerateKeys generates a new ECDSA key pair and stores it in the environment.
 func GenerateKeys() error {
 	privateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)

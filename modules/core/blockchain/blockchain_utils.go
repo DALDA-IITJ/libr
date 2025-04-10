@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
-)
+) 
 
 // BlockchainResponse represents the JSON structure of blockchain data.
 type BlockchainResponse struct {

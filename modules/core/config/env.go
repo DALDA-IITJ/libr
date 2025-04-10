@@ -13,7 +13,7 @@ func LoadEnv() {
 	if err != nil {
 		log.Println("Warning: No .env file found, relying on system environment variables")
 	}
-}
+} 
 
 // GetEnv retrieves an environment variable with an optional fallback.
 func GetEnv(key, fallback string) string {
