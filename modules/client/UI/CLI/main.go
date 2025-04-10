@@ -15,8 +15,9 @@ func main() {
 	repl()
 }
 
-func roundToHundred(ts int64) int64 {
-	return ts - (ts % 100)
+func divideByHundred(ts int64) int64 {
+	print("ts = ", ts, "\n")
+	return ts / 100
 }
 
 // Read-Eval-Print Loop
@@ -26,7 +27,7 @@ func repl() {
 	fmt.Println("Type 'help' for commands. Type '\\q' to quit.")
 	fmt.Println("===========================")
 
-	currentTimestamp := roundToHundred(time.Now().Unix())
+	currentTimestamp := divideByHundred(time.Now().Unix())
 
 	for {
 		fmt.Print("> ")
@@ -55,7 +56,7 @@ func repl() {
 		case "send":
 			handleSendCommand(args)
 			// currentTimestamp = time.Now().Unix() // Update timestamp
-			currentTimestamp = roundToHundred(time.Now().Unix())
+			currentTimestamp = divideByHundred(time.Now().Unix())
 		case "fetch", "f":
 			handleFetchCommand(currentTimestamp)
 		case "prev", "p":
@@ -103,25 +104,25 @@ func handleFetchCommand(timestamp int64) {
 	fmt.Println("==============================\n")
 }
 
-func handlePrevCommand(timestamp int64) int64 {
+func handlePrevCommand(currentBucket int64) int64 {
+	prevBucket := currentBucket - 1
 	core := core.NewCore()
-	messages, err := core.FetchMessages(fmt.Sprint(timestamp - 100)) // Assuming FetchMessages handles older timestamps //100
+	messages, err := core.FetchMessages(fmt.Sprint(prevBucket))
 	if err != nil {
 		fmt.Println("Error fetching messages:", err)
-		return timestamp
+		return currentBucket // Don't update timestamp on error
 	}
 
-	fmt.Println("\n=== Messages Before Timestamp ===")
+	fmt.Println("\n=== Messages in Previous Bucket ===")
 	if len(messages) == 0 {
-		fmt.Println("No older messages found.")
+		fmt.Println("No messages found in previous bucket.")
 	} else {
 		for _, msg := range messages {
-			fmt.Printf("[%s] %s\n", time.Unix(timestamp, 0).Format("2006-01-02 15:04:05"), msg.Content)
+			fmt.Printf("[%s] [%s] => %s\n", time.Unix(currentBucket*100, 0).Format("2006-01-02 15:04:05"), msg.Sender, msg.Content)
 		}
-		timestamp = timestamp - 100 // Move to the previous timestamp
 	}
 	fmt.Println("===============================\n")
-	return timestamp
+	return prevBucket
 }
 
 func printHelp() {
