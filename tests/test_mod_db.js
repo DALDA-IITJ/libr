@@ -27,6 +27,8 @@ app.use(bodyParser.json());
 app.post("/moderate", (req, res) => {
     const { message, timestamp } = req.body;
 
+    console.log("req.body for mod= ", req.body);
+
     // Construct payload and hash it
     const payload = { message, timestamp };
     const dataToSign = JSON.stringify(payload);
@@ -36,7 +38,10 @@ app.post("/moderate", (req, res) => {
     const signature = keyPair.sign(hash, "hex");
     const signatureHex = signature.toDER("hex");
 
-    console.log("signing message ", message, " with sign ", signatureHex);
+    console.log(`{
+        "public_key": "${publicKey}",
+        "sign": "${signatureHex}"
+    }`);
 
     // Respond with signature and public key
     res.status(200).json({
@@ -48,6 +53,22 @@ app.post("/moderate", (req, res) => {
 app.post("/db/savemsg", (req, res) => {
     console.log(req.body);
     res.status(200).json();
+})
+
+app.get("/fetch/:timestamp", (req, res) => {
+    console.log(req.params);
+    const { timestamp } = req.params;
+    res.status(200).json({
+        data: [
+            {
+                content: "message",
+                sender: "qwertyuiop"
+            }
+        ],
+        error: null,
+        message: "Message retrieved succesfully",
+        status: 200
+    })
 })
 
 app.listen(PORT, () => {

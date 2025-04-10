@@ -1,10 +1,10 @@
 {
   "sender": "senderpk",
   "msg": "msg",
-  "timestamp": "timestamp",
+  "ts": "timestamp",
   "mod_cert": [
     {
-      "pubkey": "pubkey",
+      "public_key": "pubkey",
       "sign": "sign"
     }
   ],
