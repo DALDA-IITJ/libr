@@ -6,7 +6,7 @@
 # https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
 #
 # Binaries for programs and plugins
-*.exe
+!release/*.exe
 *.exe~
 *.dll
 *.so
@@ -168,5 +168,4 @@ dist
 
 playground/
 
-*.exe
 *.env
