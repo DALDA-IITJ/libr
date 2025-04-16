@@ -1,10 +1,8 @@
 <div align="center">
 
-# LIBR ✨🚀
+# LIBR
 
 [<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/go/go-original.svg" width="60">](https://golang.org)
-[<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" width="60">](https://javascript.com)
-[<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" width="60">](https://reactjs.org/)
 
 [![Open in Visual Studio Code](https://img.shields.io/badge/Open%20in%20VS%20Code-007ACC?logo=visual-studio-code&logoColor=white)](https://vscode.dev/)
 [![Contributors](https://img.shields.io/github/contributors/DALDA-IITJ/libr)](https://github.com/DALDA-IITJ/libr/graphs/contributors)
@@ -12,7 +10,6 @@
 [![Stars](https://img.shields.io/github/stars/DALDA-IITJ/libr?style=social)](https://github.com/DALDA-IITJ/libr/stargazers)
 [![License](https://img.shields.io/github/license/DALDA-IITJ/libr)](https://github.com/DALDA-IITJ/libr/blob/main/LICENSE)
 [![Go Version](https://img.shields.io/badge/Go-v1.16+-blue?logo=go&logoColor=white)](https://golang.org/)
-[![React Version](https://img.shields.io/badge/React-v17+-blue?logo=react&logoColor=white)](https://reactjs.org/)
 
 *A Decentralized Messaging Platform with Content Moderation* 📢🚫
 
