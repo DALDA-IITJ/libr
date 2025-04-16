@@ -16,8 +16,8 @@ func FetchModerators() []Moderator {
 	fmt.Printf("Fetching mods...")
 
 	return []Moderator{
-		{"localhost", "8080", "PublicKey1"},
-		{"localhost", "8081", "PublicKey2"},
+		{"localhost", "8083", "PublicKey1"},
+		// {"localhost", "8081", "PublicKey2"},
 		// {"localhost", "8082", "PublicKey3"},
 	}
 }

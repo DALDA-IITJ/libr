@@ -56,7 +56,7 @@ func (c *Core) SendMessage(content string) error {
 
 	// Serialize MsgCert for signing
 	msgCertBytes, _ := json.Marshal(msgCert)
-	signature, err := crypto.SignMessage(privateKey, string(msgCertBytes))
+	signature, err := crypto.SignMessage(string(msgCertBytes), privateKey)
 	if err != nil {
 		return err
 	}

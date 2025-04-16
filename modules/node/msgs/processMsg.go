@@ -6,6 +6,7 @@ import (
 
 	"github.com/DALDA-IITJ/libr/modules/node/blockchain"
 	"github.com/DALDA-IITJ/libr/modules/node/db"
+	"github.com/DALDA-IITJ/libr/modules/node/utils"
 	"github.com/DALDA-IITJ/libr/modules/node/utils/logger"
 )
 
@@ -169,15 +170,15 @@ func verifyKMods(ts string, msgCert map[string]interface{}) error {
 
 // VerifyMsgCert ensures message signature is valid
 func verifyMsgCert(ts string, msgCert map[string]interface{}) error {
-	// isVerified, err := utils.VerifyMsgCert(ts, msgCert)
-	// if err != nil {
-	// 	logger.Error("Message certificate verification failed: " + err.Error())
-	// 	return err
-	// }
-	// if !isVerified {
-	// 	logger.Error("Message verification failed")
-	// 	return fmt.Errorf("message verification failed")
-	// }
+	isVerified, err := utils.VerifyMsgCert(ts, msgCert)
+	if err != nil {
+		logger.Error("Message certificate verification failed: " + err.Error())
+		return err
+	}
+	if !isVerified {
+		logger.Error("Message verification failed")
+		return fmt.Errorf("message verification failed")
+	}
 	return nil
 }
 

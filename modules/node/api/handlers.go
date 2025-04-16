@@ -33,7 +33,7 @@ func SaveMsgHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	logger.Info("Message certificate added to queue for processing")
-	resp.SendResponse(w, http.StatusOK, "Message certificate added to queue for processing", nil, nil)
+	// resp.SendResponse(w, http.StatusOK, "Message certificate added to queue for processing", nil, nil)
 }
 
 func GetMsgHandler(w http.ResponseWriter, r *http.Request) {

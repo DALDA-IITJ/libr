@@ -11,4 +11,4 @@ require (
 
 require github.com/DALDA-IITJ/libr/modules/core v0.0.0-20250402151745-2d07ac743102
 
-// replace github.com/DALDA-IITJ/libr/modules/core => ../core
+replace github.com/DALDA-IITJ/libr/modules/core => ../core

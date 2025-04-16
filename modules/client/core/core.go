@@ -11,11 +11,11 @@ type UserMessage struct {
 }
 
 type MsgCert struct {
-	Sender  string    `json:"sender"`
-	Msg     string    `json:"msg"`
-	TS      string    `json:"ts"`
 	ModCert []ModSign `json:"mod_cert"`
+	Msg     string    `json:"msg"`
+	Sender  string    `json:"sender"`
 	Sign    string    `json:"sign"`
+	TS      string    `json:"ts"`
 }
 
 // DatabaseNode represents a database node in the network.

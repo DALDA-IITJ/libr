@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/DALDA-IITJ/libr/modules/core/crypto"
@@ -64,21 +65,27 @@ func senderSignCheck(msgCert map[string]interface{}) error {
 		return err
 	}
 
-	message := make(map[string]interface{})
-	for k, v := range msgCert {
-		if k == "sign" || k == "sender" {
-			continue
-		}
-		message[k] = v
+	message := map[string]interface{}{
+		"sender":   msgCert["sender"],
+		"msg":      msgCert["msg"],
+		"ts":       msgCert["ts"],
+		"mod_cert": msgCert["mod_cert"],
+		"sign":     "",
 	}
 
 	// Convert message to string
-	messageStr := ""
-	for k, v := range message {
-		messageStr += fmt.Sprintf("%s:%v;", k, v)
+	messageBytes, err := json.Marshal(message)
+	if err != nil {
+		logger.Error("Failed to marshal message to JSON: " + err.Error())
+		return err
 	}
+	messageStr := string(messageBytes)
 
-	isSigned, err := crypto.VerifySignature(sender, messageStr, senderSign)
+	logger.Debug(fmt.Sprintf("Verifying sender sign for public key: %s", sender))
+	logger.Debug(fmt.Sprintf("Message string for verification: %s", messageStr))
+	logger.Debug(fmt.Sprintf("Sender signature: %s", senderSign))
+
+	isSigned, err := crypto.VerifySignature(messageStr, senderSign, sender)
 	if err != nil {
 		logger.Error("Failed to verify sender sign: " + err.Error())
 		return err
@@ -95,6 +102,8 @@ func senderSignCheck(msgCert map[string]interface{}) error {
 }
 
 func verifyModCerts(msgCert map[string]interface{}) error {
+	logger.Debug(fmt.Sprintf("Verifying module certificates with msgCert: %v", msgCert))
+
 	msg, ok := msgCert["msg"].(string)
 	if !ok {
 		err := fmt.Errorf("msg is missing or not of the expected type")
@@ -109,16 +118,29 @@ func verifyModCerts(msgCert map[string]interface{}) error {
 		return err
 	}
 
-	modCerts, ok := msgCert["mod_cert"].([]map[string]string)
+	logger.Debug(fmt.Sprintf("Type of mod_cert: %T", msgCert["mod_cert"]))
+	rawModCerts, ok := msgCert["mod_cert"].([]interface{})
 	if !ok {
 		err := fmt.Errorf("mod_cert is missing or not of the expected type")
 		logger.Error(err.Error())
 		return err
 	}
 
+	modCerts := make([]map[string]interface{}, len(rawModCerts))
+	for i, rawCert := range rawModCerts {
+		modCert, ok := rawCert.(map[string]interface{})
+		if !ok {
+			err := fmt.Errorf("mod_cert[%d] is not of the expected type", i)
+			logger.Error(err.Error())
+		}
+		modCerts[i] = modCert
+	}
+
+	logger.Debug(fmt.Sprintf("Verifying %d module certificates", len(modCerts)))
+
 	for _, modCert := range modCerts {
-		modPubKey := modCert["public_key"]
-		modSign := modCert["sign"]
+		modPubKey := modCert["public_key"].(string)
+		modSign := modCert["sign"].(string)
 
 		message := map[string]interface{}{
 			"msg":       msg,
@@ -130,7 +152,11 @@ func verifyModCerts(msgCert map[string]interface{}) error {
 			messageStr += fmt.Sprintf("%s:%v;", k, v)
 		}
 
-		isSigned, err := crypto.VerifySignature(modPubKey, messageStr, modSign)
+		logger.Debug(fmt.Sprintf("Verifying module sign for public key: %s", modPubKey))
+		logger.Debug(fmt.Sprintf("Message string for verification: %s", messageStr))
+		logger.Debug(fmt.Sprintf("Module signature: %s", modSign))
+
+		isSigned, err := crypto.VerifySignature(messageStr, modSign, modPubKey)
 		if err != nil {
 			logger.Error("Failed to verify module sign: " + err.Error())
 			return err

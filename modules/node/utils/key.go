@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"crypto/ecdsa"
 
 	"github.com/DALDA-IITJ/libr/modules/core/config"
 	"github.com/DALDA-IITJ/libr/modules/core/crypto"
@@ -9,7 +8,7 @@ import (
 )
 
 var PublicKey string
-var PrivateKey *ecdsa.PrivateKey
+var PrivateKey string
 
 func EnsureKeyPair() error {
 

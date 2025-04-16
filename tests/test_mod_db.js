@@ -7,7 +7,7 @@ const { ec: EC } = require("elliptic");
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8083;
 
 // Setup secp256k1
 const ec = new EC("secp256k1");
@@ -30,6 +30,8 @@ app.post("/moderate", (req, res) => {
     // Construct payload and hash it
     const payload = { message, timestamp };
     const dataToSign = JSON.stringify(payload);
+    console.log("data to sign ", dataToSign);
+    
     const hash = crypto.createHash("sha256").update(dataToSign).digest("hex");
 
     // Sign the hash

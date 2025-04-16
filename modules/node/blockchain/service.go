@@ -50,7 +50,7 @@ func RegisterNode() {
 
 	dataStr := string(messageBytes)
 
-	sign, err := crypto.SignMessage(utils.PrivateKey, dataStr)
+	sign, err := crypto.SignMessage(dataStr, utils.PrivateKey)
 	if err != nil {
 		logger.Error("Failed to sign message: " + err.Error())
 		return

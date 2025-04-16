@@ -170,3 +170,5 @@ playground/
 
 *.exe
 *.env
+
+*node_modules
