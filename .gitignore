@@ -169,3 +169,5 @@ dist
 playground/
 
 *.env
+
+key.json
