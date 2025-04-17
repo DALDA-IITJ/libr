@@ -9,6 +9,8 @@ func GetCommandHandlers() map[string]CommandHandler {
 		"f":     handleFetchCommand,
 		"prev":  handlePrevCommand,
 		"p":     handlePrevCommand,
+		"next":  handleNextCommand,
+		"n":     handleNextCommand,
 		"setup": handleModSetupCommand,
 		"help":  handleHelpCommand,
 	}

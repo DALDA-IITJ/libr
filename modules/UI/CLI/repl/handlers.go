@@ -71,11 +71,34 @@ func handlePrevCommand(args []string, currentBucket int64) int64 {
 	return prevBucket
 }
 
+func handleNextCommand(args []string, currentBucket int64) int64 {
+	nextBucket := currentBucket + 1
+	core := client.NewCore()
+	messages, err := core.FetchMessages(fmt.Sprint(nextBucket))
+	if err != nil {
+		fmt.Println("Error fetching messages:", err)
+		return currentBucket // Don't update timestamp on error
+	}
+
+	fmt.Println("\n=== Messages in Next Bucket ===")
+	if len(messages) == 0 {
+		fmt.Println("No messages found in next bucket.")
+	} else {
+		for _, msg := range messages {
+			fmt.Printf("[%s] [%s] => %s\n", time.Unix(nextBucket*100, 0).Format("2006-01-02 15:04:05"), msg.Sender, msg.Content)
+		}
+	}
+	fmt.Println("=============================\n")
+	return nextBucket
+}
+
+
 func handleHelpCommand(args []string, timestamp int64) int64 {
 	fmt.Println("\n=== CLI Commands ===")
 	fmt.Println("send <message>     - Send a message.")
 	fmt.Println("f, fetch           - Fetch messages after the current timestamp.")
 	fmt.Println("p, prev            - Fetch messages before the current timestamp.")
+	fmt.Println("n, next           - Fetch messages in the next bucket.")
 	fmt.Println("\\q                 - Quit the CLI.")
 	fmt.Println("====================\n")
 	return timestamp
