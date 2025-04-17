@@ -1,4 +1,4 @@
-package core
+package client
 
 import (
 	"bytes"
@@ -85,8 +85,9 @@ func fetchDBTest() []DatabaseNode {
 	fmt.Printf("Fetching dbs...\n")
 
 	return []DatabaseNode{
-		{"172.31.105.135", "8082"},
-		{"172.31.79.66", "8082"},
+		{"172.31.119.163", "8082"},
+		// {"172.31.91.201", "8082"},
 		{"172.31.87.47", "8082"},
+		{"172.31.88.50", "8082"},
 	}
 }

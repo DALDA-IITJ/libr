@@ -33,12 +33,16 @@ func handleModerate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	print(1)
+
 	// Decode request expecting "message" and "timestamp"
 	var req ModerateRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "Invalid request", http.StatusBadRequest)
 		return
 	}
+
+	print(2)
 
 	// Run moderation check on the message text.
 	categories, err := ModerateText(req.Message)
@@ -47,12 +51,16 @@ func handleModerate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	print(3)
+
 	// Compute the moderation score.
 	var score float64
 	for _, cat := range categories {
 		weight := getCategoryWeight(cat.Name)
 		score += cat.Confidence * weight
 	}
+
+	print(4)
 
 	// If score exceeds threshold then reject the message.
 	if score >= Threshold {
@@ -79,11 +87,15 @@ func handleModerate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	print(5)
+
 	signature, err := crypto.SignMessage(privateKey, string(payloadBytes))
 	if err != nil {
 		http.Error(w, "Signing failed: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	print(6)
 
 	publicKey, err := crypto.LoadPublicKey()
 	if err != nil {
@@ -91,11 +103,15 @@ func handleModerate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	print(7)
+
 	// Response includes the public key and the signature.
 	response := map[string]string{
 		"public_key": publicKey,
 		"sign":       signature,
 	}
+
+	print(8)
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)

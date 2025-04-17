@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/DALDA-IITJ/libr/modules/client/core"
+	"github.com/DALDA-IITJ/libr/modules/client"
 	"github.com/spf13/cobra"
 )
 
@@ -17,7 +17,7 @@ var sendCmd = &cobra.Command{
 		}
 
 		message := args[0]
-		core := core.NewCore()
+		core := client.NewCore()
 		err := core.SendMessage(message)
 		if err != nil {
 			fmt.Println("Error:", err)

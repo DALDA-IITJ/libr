@@ -1,7 +1,5 @@
-github.com/DALDA-IITJ/libr/modules/client v0.0.0-20250410230548-dc6c7459139c h1:a7a/2OhXvix6clu0NwSgQ0kjkdd4Xc6Sa7dbiRpf0gw=
-github.com/DALDA-IITJ/libr/modules/client v0.0.0-20250410230548-dc6c7459139c/go.mod h1:dUWsAsVM1M69s1blY5jDrdZ4PoBKPdt4FrvNsxhd2Cs=
-github.com/DALDA-IITJ/libr/modules/core v0.0.0-20250402151745-2d07ac743102 h1:+P2Sbi2nz62lpKHNUu6Cip0jSvJP57l2gNkYXrJI4JE=
-github.com/DALDA-IITJ/libr/modules/core v0.0.0-20250402151745-2d07ac743102/go.mod h1:rif3C4OAhxCS63/urIrrZlW+Pg6ZDGUXbYv//swYpsQ=
+github.com/DALDA-IITJ/libr/modules/core v0.1.0 h1:WaJQZ6Jt1Yry4MWMBkFfL3/FEi/F5PJJ/KiCQshH+1E=
+github.com/DALDA-IITJ/libr/modules/core v0.1.0/go.mod h1:MfqzAHEkb0VK/ThpnHXxLdGIamM7H6wTripVaxg1k9A=
 github.com/cpuguy83/go-md2man/v2 v2.0.6/go.mod h1:oOW0eioCTA6cOiMLiUPZOpcVxMig6NIQQ7OS05n1F4g=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=

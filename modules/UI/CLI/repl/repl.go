@@ -11,7 +11,7 @@ import (
 func Start() {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("=== Welcome to Libr ===")
-	fmt.Println("Type 'help' for commands. Type '\\q' to quit.")
+	fmt.Println("Type 'help' for commands. New Type '\\q' to quit.")
 	fmt.Println("===========================")
 
 	currentTimestamp := divideByHundred(time.Now().Unix())

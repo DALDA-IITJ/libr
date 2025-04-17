@@ -1,4 +1,4 @@
-package core
+package client
 
 import "github.com/DALDA-IITJ/libr/modules/core/config"
 
