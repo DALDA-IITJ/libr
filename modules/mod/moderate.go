@@ -12,7 +12,7 @@ import (
 func ModerateText(text string) ([]Category, error) {
 	ctx := context.Background()
 
-	println("Moderating text... ", text)
+	println("Moderating text... ", text, "\n")
 
 	httpClient, err := google.DefaultClient(ctx, language.CloudPlatformScope)
 	if err != nil {
@@ -36,8 +36,6 @@ func ModerateText(text string) ([]Category, error) {
 		return nil, fmt.Errorf("moderateText API call failed: %v", err)
 	}
 
-	print("resp\n")
-
 	var results []Category
 	for _, cat := range resp.ModerationCategories {
 		results = append(results, Category{
@@ -46,7 +44,6 @@ func ModerateText(text string) ([]Category, error) {
 		})
 	}
 
-	print("res = ", results[0].Name, " ", results[0].Confidence)
 	return results, nil
 }
 

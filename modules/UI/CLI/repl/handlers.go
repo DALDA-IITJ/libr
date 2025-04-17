@@ -18,7 +18,8 @@ func handleSendCommand(args []string, timestamp int64) int64 {
 		return timestamp
 	}
 
-	message := args[0]
+	// message := args[0]
+	message := strings.Join(args, " ")
 	core := client.NewCore()
 	err := core.SendMessage(message)
 	if err != nil {
