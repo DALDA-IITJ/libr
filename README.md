@@ -39,47 +39,6 @@ LIBR is a decentralized messaging platform that combines blockchain principles w
 - **Google Cloud Platform API key** (for content moderation services)
 - **npm** or **yarn** package manager
 
-## 📚 Installation
-
-<details>
-  
-<summary>📃 Step-by-step guide</summary>
-
-1. Clone the repository:
-```bash
-git clone https://github.com/DALDA-IITJ/libr.git
-cd libr
-```
-
-2. Set up configuration:
-```bash
-# Navigate to moderator module
-cd modules/mod
-
-# Create .env file with your configuration
-cp .env.example .env
-# Edit .env with your settings
-```
-
-3. Install and build moderator service:
-```bash
-go mod download
-go build
-```
-
-4. Install client module dependencies:
-```bash
-cd ../client
-go mod download
-```
-
-5. Install UI dependencies:
-```bash
-cd ../UI
-npm install
-```
-</details>
-
 ## 🚀 Running the System
 
 1. Start moderator nodes:
