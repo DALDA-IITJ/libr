@@ -11,7 +11,7 @@
 [![License](https://img.shields.io/github/license/DALDA-IITJ/libr)](https://github.com/DALDA-IITJ/libr/blob/main/LICENSE)
 [![Go Version](https://img.shields.io/badge/Go-v1.16+-blue?logo=go&logoColor=white)](https://golang.org/)
 
-*A Decentralized Messaging Platform with Content Moderation* 📢🚫
+*A Moderated, Censorship-Resilient Digital Forum* 📢🚫
 
 [Key Features](#key-features) • [Installation](#installation) • [Documentation](#api-endpoints) • [Contributing](#contributing)
 
