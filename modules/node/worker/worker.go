@@ -2,6 +2,8 @@ package worker
 
 import (
 	"encoding/json"
+	"fmt"
+	"runtime/debug"
 	"strconv"
 
 	"github.com/DALDA-IITJ/libr/modules/node/msgs"
@@ -22,10 +24,17 @@ func StartWorkerPool(workerCount int) {
 // worker continuously processes messages from the queue
 func worker() {
 	for msgCert := range msgProcessingQueue {
-		err := msgs.ProcessMsg(msgCert)
-		if err != nil {
-			logger.Error("Failed to process message: " + err.Error())
-		}
+		func() {
+			defer func() {
+				if r := recover(); r != nil {
+					logger.Error(fmt.Sprintf("Worker recovered from panic: %v\nStack trace:\n%s", r, string(debug.Stack())))
+				}
+			}()
+			err := msgs.ProcessMsg(msgCert)
+			if err != nil {
+				logger.Error("Failed to process message: " + err.Error())
+			}
+		}()
 	}
 }
 

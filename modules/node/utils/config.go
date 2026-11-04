@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"os"
+	"regexp"
 
 	"github.com/DALDA-IITJ/libr/modules/node/utils/logger"
 	"gopkg.in/yaml.v2"
@@ -14,21 +15,31 @@ var Config map[string]interface{}
 
 // LoadConfig loads the configuration from a YAML file into the global Config variable
 func LoadConfigAndEnv() {
-	file, err := os.Open("config.yaml")
-	logger.Debug("hello")
-	if err != nil {
-		logger.Error("Failed to open config file: " + err.Error())
-	}
-	defer file.Close()
+	config.LoadEnv()
 
-	decoder := yaml.NewDecoder(file)
-	err = decoder.Decode(&Config)
+	content, err := os.ReadFile("config.yaml")
+	if err != nil {
+		logger.Fatal("Failed to open config file: " + err.Error())
+	}
+
+	re := regexp.MustCompile(`\$\{([^}:]+)(?::-([^}]*))?\}`)
+	expanded := re.ReplaceAllStringFunc(string(content), func(match string) string {
+		sub := re.FindStringSubmatch(match)
+		varName := sub[1]
+		defaultVal := ""
+		if len(sub) > 2 {
+			defaultVal = sub[2]
+		}
+		if val, exists := os.LookupEnv(varName); exists && val != "" {
+			return val
+		}
+		return defaultVal
+	})
+
+	err = yaml.Unmarshal([]byte(expanded), &Config)
 	if err != nil {
 		logger.Fatal("Failed to decode config file: " + err.Error())
 	}
-
-	config.LoadEnv()
-
 }
 
 func GetConfig() map[interface{}]interface{} {
