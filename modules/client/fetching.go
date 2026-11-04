@@ -21,6 +21,9 @@ func fetchMessages(timestamp string) ([]Message, error) {
 
 	// Fetch the database nodes (simulated for now)
 	dbNodes := fetchDBTest()
+	if len(dbNodes) == 0 {
+		return nil, fmt.Errorf("no database nodes available")
+	}
 
 	// Channel to collect responses
 	responseChannel := make(chan []Message, len(dbNodes))
@@ -89,8 +92,8 @@ func fetchMessages(timestamp string) ([]Message, error) {
 
 	// If there were any errors during fetching, return the last error
 	select {
-	case err := <-errorChannel:
-		if err != nil {
+	case err, ok := <-errorChannel:
+		if ok && err != nil {
 			return nil, err
 		}
 	default:
@@ -103,6 +106,10 @@ func fetchMessages(timestamp string) ([]Message, error) {
 
 // resolveMessages resolves the messages by majority vote
 func resolveMessages(allMessages [][]Message) []Message {
+	if len(allMessages) == 0 {
+		return nil
+	}
+
 	var resolvedMessages []Message
 
 	// Iterate over each message index in the responses
