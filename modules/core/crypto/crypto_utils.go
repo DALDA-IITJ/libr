@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"math/big"
 	"os"
+	"strings"
 
 	"github.com/DALDA-IITJ/libr/modules/core/config"
 )
@@ -104,14 +105,23 @@ func VerifySignature(publicKeyHex, message, signature string) (bool, error) {
 	}
 
 	// Convert publicKeyHex to ECDSA PublicKey
-	if len(publicKeyHex) < 128 {
+	publicKeyHex = strings.TrimSpace(publicKeyHex)
+	if len(publicKeyHex) == 130 && publicKeyHex[:2] == "04" {
+		publicKeyHex = publicKeyHex[2:]
+	}
+
+	if len(publicKeyHex) != 128 {
 		return false, errors.New("invalid public key length")
 	}
 
 	x := new(big.Int)
 	y := new(big.Int)
-	x.SetString(publicKeyHex[:64], 16)
-	y.SetString(publicKeyHex[64:], 16)
+	if _, ok := x.SetString(publicKeyHex[:64], 16); !ok {
+		return false, errors.New("invalid public key x coordinate")
+	}
+	if _, ok := y.SetString(publicKeyHex[64:], 16); !ok {
+		return false, errors.New("invalid public key y coordinate")
+	}
 
 	publicKey := ecdsa.PublicKey{Curve: elliptic.P256(), X: x, Y: y}
 
