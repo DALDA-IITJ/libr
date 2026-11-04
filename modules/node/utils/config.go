@@ -15,9 +15,8 @@ var Config map[string]interface{}
 // LoadConfig loads the configuration from a YAML file into the global Config variable
 func LoadConfigAndEnv() {
 	file, err := os.Open("config.yaml")
-	logger.Debug("hello")
 	if err != nil {
-		logger.Error("Failed to open config file: " + err.Error())
+		logger.Fatal("Failed to open config file: " + err.Error())
 	}
 	defer file.Close()
 

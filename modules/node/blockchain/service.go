@@ -2,6 +2,7 @@ package blockchain
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"strconv"
 	"time"
@@ -36,8 +37,8 @@ func RegisterNode() {
 	data := blockchain.TxData{
 		Type: "DB_JOINED",
 		Metadata: map[string]string{
-			"ip":   nodeConfig["node_ip"].(string),
-			"port": nodeConfig["node_port"].(string),
+			"ip":   fmt.Sprintf("%v", nodeConfig["node_ip"]),
+			"port": fmt.Sprintf("%v", nodeConfig["node_port"]),
 			// "other": "",
 		},
 	}
@@ -56,7 +57,7 @@ func RegisterNode() {
 		return
 	}
 
-	nonceStr := strconv.Itoa(txConfig["nonce"].(int))
+	nonceStr := fmt.Sprintf("%v", txConfig["nonce"])
 	timeStampStr := strconv.Itoa(int(time.Now().Unix()))
 
 	var tx = blockchain.Transaction{
