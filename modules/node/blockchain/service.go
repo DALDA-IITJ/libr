@@ -168,6 +168,10 @@ func normalizeIntegerField(value interface{}, fieldName string, allowZero bool) 
 		return "", fmt.Errorf("%s must be greater than 0", fieldName)
 	}
 
+	if fieldName == "node_port" && number > 65535 {
+		return "", fmt.Errorf("%s must be a valid port (<= 65535)", fieldName)
+	}
+
 	return strconv.FormatInt(number, 10), nil
 }
 
