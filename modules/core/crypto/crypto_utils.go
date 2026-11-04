@@ -23,7 +23,7 @@ func GenerateKeys() error {
 	}
 
 	privateKeyHex := hex.EncodeToString(privateKey.D.Bytes())
-	publicKeyHex := fmt.Sprintf("%x%x", privateKey.PublicKey.X, privateKey.PublicKey.Y)
+	publicKeyHex := fmt.Sprintf("%064x%064x", privateKey.PublicKey.X, privateKey.PublicKey.Y)
 
 	// Check if .env file exists
 	if _, err := os.Stat(".env"); os.IsNotExist(err) {
