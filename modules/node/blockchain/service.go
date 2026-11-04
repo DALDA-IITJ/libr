@@ -34,11 +34,27 @@ func RegisterNode() {
 	txConfig := utils.GetTransactionConfig()
 	nodeConfig := utils.GetNodeConfig()
 
+	if nodeConfig["node_ip"] == nil || nodeConfig["node_port"] == nil {
+		logger.Error("node_ip or node_port is missing in configuration")
+		return
+	}
+	if txConfig["nonce"] == nil {
+		logger.Error("nonce is missing in transaction configuration")
+		return
+	}
+
+	ipStr := fmt.Sprintf("%v", nodeConfig["node_ip"])
+	portStr := fmt.Sprintf("%v", nodeConfig["node_port"])
+	if ipStr == "" || portStr == "" {
+		logger.Error("node_ip or node_port cannot be empty")
+		return
+	}
+
 	data := blockchain.TxData{
 		Type: "DB_JOINED",
 		Metadata: map[string]string{
-			"ip":   fmt.Sprintf("%v", nodeConfig["node_ip"]),
-			"port": fmt.Sprintf("%v", nodeConfig["node_port"]),
+			"ip":   ipStr,
+			"port": portStr,
 			// "other": "",
 		},
 	}
